@@ -1,0 +1,20 @@
+<h1> Aplicación de caracterización de imágenes </h1>
+<form method="POST", enctype="multipart/form-data">
+    {% csrf_token %}
+    <div>
+        <h4> Agregar imágen </h4>
+        <input type="file" name="image_file">
+    </div>
+<h4> Agregar metadatos </h4>
+<label> Edad gestacional </label></br>
+<input type="number" name="edad"></br>
+<label> Posición del feto </label></br>
+<select name="posicion">
+    <option value="lateral-der">Lateral Derecho</option>
+    <option value="lateral-izq">Lateral Izquierda</option>
+    <option value="anterior">Anterior</option>
+    <option value="posterior">Posterior</option>
+</select>
+</br>
+<button type="submit">Enviar</button>
+</form>

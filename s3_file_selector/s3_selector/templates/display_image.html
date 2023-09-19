@@ -1,0 +1,44 @@
+{% load custom_tags %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        
+        <title>Amazon Cloud With Django</title>
+    </head>
+
+    <body>
+        <div class="header">
+            <h2 class="text-center">Repositorio de imágenes</h2>
+        </div>
+        <br>
+        <div class="container-fluid">
+            <div class="row">
+            {% for post in files %}
+            <div class="col-md-4 col-sm-12">
+                <div class="card" style='width: 100%; float: left; margin-bottom:10px;'>
+                {% comment %} <a href="{% url 'update' post %}">  {% endcomment %}
+                <a href="update/{{post.key}}"> 
+                    <img src="{{ post.url }}" class="img-responsive-resize" style="width: 100%; height: 400px; object-fit: cover; float: left; margin-right: 10px;">
+                </a>
+                <p> 
+                    {% for metadata_item in post.metadata|metadata_to_list %}
+
+                        {% if metadata_item.key == 'ga' %} GESTATIONAL AGE: {{ metadata_item.value }} <br> {%endif%}
+                        {% if metadata_item.key == 'sexo' %} SEX: {{ metadata_item.value }} <br> {%endif%}
+                        {% if metadata_item.key == 'tipo_examen' %} TIPO DE EXAMEN: {{ metadata_item.value }} <br> {%endif%} 
+                        {% if metadata_item.key == 'hallazgo' %} HALLAZGO: {{ metadata_item.value }} <br> {%endif%} 
+                        {% if metadata_item.key != 'hallazgo' and metadata_item.key != 'ga' and metadata_item.key != 'sexo' and metadata_item.key != 'tipo_examen' and metadata_item.key != 'content-type' %} {{ metadata_item.key|upper }} : {{ metadata_item.value }} <br> {%endif%} 
+
+                {% endfor %}
+                    
+                </p>
+                </div>
+            </div>
+            {% endfor %}
+            </div>
+        </div>
+    </body>
+</html>

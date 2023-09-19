@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        
+        <title>Amazon Cloud With Django</title>
+    </head>
+
+    <body style="display: grid;
+    align-items: center;
+    justify-content: space-around; padding: 50px;">
+        <img src="{{ url }}" class="img-responsive-resize" style="height: 400px; object-fit: cover; float: left; margin-right: 10px;"> </br>
+        
+        <form method="POST">
+            {%csrf_token%}
+            <label for ="ga"> Edad gestacional </label>
+            <select name="ga" id="ga"> 
+                <option value="" selected="selected">-</option>
+                {% for data in ga %}
+                    <option value="{{data}}" {% if data|lower == ga_metadato|lower %}selected="selected"{% endif %}>
+                        {{data}}
+                    </option>
+                {% endfor %}
+            </select>
+
+            </br>
+
+            <label for ="sexo"> Sexo </label>
+            <select name="sexo" id="sexo"> 
+                <option value="" selected="selected">-</option>
+                {% for data in sexo %}
+                    <option value="{{data}}" {% if data|lower == sexo_metadato|lower %}selected="selected"{% endif %}>
+                        {{data}}
+                    </option>
+                {% endfor %}
+            </select>
+
+            </br>
+
+            <label for="tipo_examen"> Tipo de examen </label>
+            <select name="tipo_examen" id="tipo_examen">
+                <option value="" selected="selected">-</option>
+                {% for data in tipo_examen %}
+                    <option value="{{data}}" {% if data|lower == tipo_examen_metadato|lower %}selected="selected"{% endif %}>
+                        {{data}}
+                    </option>
+                {% endfor %}
+            </select>
+
+            </br>
+
+            <label for="hallazgo"> Hallazgo </label>
+            <select name="hallazgo" id="hallazgo">
+                <option value="" selected="selected">-</option>
+                {% for data in hallazgo %}
+                    <option value="{{data}}" {% if data|lower == hallazgo_metadato|lower %}selected="selected"{% endif %}>
+                        {{data}}
+                    </option>
+                {% endfor %}
+            </select>
+
+            </br>
+
+            {% if filtered_metadata != None%}
+                {%for key, value in filtered_metadata.items %}
+                <label for="key"> {{key|upper}} </label>
+                <input type="text" name={{key}} value={{value}} > </input>
+                </br>
+                {% endfor %}
+            {%endif%}
+
+            <label for="otro"> Otro </label>
+            <div class="input-container" style="display: flex; gap: 10px;">
+                <input type="text" placeholder="Nombre de metadato" id="new_name_metadato" name="new_name_metadato">
+                <input type="text" placeholder="Valor del metadato" id="new_value_metadato" name="new_value_metadato">
+            </div>
+
+            </br>
+
+            <button type="submit"> Actualizar </button>
+        </form>
+        <a href="{% url 'display_image'%}"> Regresar a la lista </a>
+    </body>
+</html>
